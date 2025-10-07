@@ -29,22 +29,44 @@ Feeder
 #HEAD NOTES 
 
 reference to I-Pulse as a manufacturer 
- 
+
 there is a NEMA17 stepper with single position optical encoder
 manual says rotation is acurate to .01 degree 
 
 
 
 ########################
-
+########################
 #PART NUMBERS
 
 #YASKAWA SERVO DRIVERS 
-servopack CACR PR03AC3FSY42
-servopack CACR PR03AC3FRY40
+SERVOPACK CACR PR03AC3FSY42
+SERVOPACK CACR PR03AC3FRY40
 
 #similar parts on ebay 
 CACR-PR07AC3FSY42
+
+
+########################
+#SERVO MOTORS
+
+measure 80mm across - 
+seem to be a NEMA31 
+2.5 inch hole pattern 
+
+
+#X MOTOR 
+YASKAWA USAREM-03CF2X -- 300W AC Servo Motor -- 3000 RPM, 2.7A w/ UTOP1-100VA
+
+#Y MOTOR 
+YASKAWA USASEM-07AF2X -- 700W AC Servo Motor -- 3000 RPM, 5.6A w/ UTOP1-100VR
+
+
+
+
+
+
+
 
 
 
