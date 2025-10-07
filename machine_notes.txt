@@ -6,20 +6,50 @@
 
 
 Head 
+
 Station 
+F - front station 
+R - rear station 
 
 Matrix 
+
 Link 
-
-
 
 Feeder
 
 
 
 
+########################
+
+ 
+
 
 ########################
+#HEAD NOTES 
+
+reference to I-Pulse as a manufacturer 
+ 
+there is a NEMA17 stepper with single position optical encoder
+manual says rotation is acurate to .01 degree 
+
+
+
+########################
+
+#PART NUMBERS
+
+#YASKAWA SERVO DRIVERS 
+servopack CACR PR03AC3FSY42
+servopack CACR PR03AC3FRY40
+
+#similar parts on ebay 
+CACR-PR07AC3FSY42
+
+
+
+
+
 
 
 
