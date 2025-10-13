@@ -20,18 +20,6 @@ Feeder
 
 
 
-########################
-
- 
-
-
-########################
-#HEAD NOTES 
-
-reference to I-Pulse as a manufacturer 
-
-there is a NEMA17 stepper with single position optical encoder
-manual says rotation is acurate to .01 degree 
 
 
 
@@ -47,16 +35,23 @@ SERVOPACK CACR PR03AC3FRY40
 CACR-PR07AC3FSY42
 
 
+
 ########################
 #MOTOR CONMTROLLER IO 
 
-#controller cable 
-DB50??  (50 pins total but only 20 on the board connector )
+#CN1 - controller cable 
+PLUG STYLE IS MR50-L HONDA 
+(50 pins total but only 20 on the board connector, 18 actually used  )
 
-#encoder cable 
+
+#CN2 - encoder cable  
+MR-20L honda
+
 20 pins total 
 
 
+
+########################
 ########################
 #SERVO MOTORS
 
@@ -71,6 +66,7 @@ YASKAWA USASEM-07AF2X -- 700W AC Servo Motor -- 3000 RPM, 5.6A w/ UTOP1-100VR
 
 
 
+########################
 #########################
 #pulleys 
 
