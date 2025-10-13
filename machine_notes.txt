@@ -48,12 +48,20 @@ CACR-PR07AC3FSY42
 
 
 ########################
+#MOTOR CONMTROLLER IO 
+
+#controller cable 
+DB50??  (50 pins total but only 20 on the board connector )
+
+#encoder cable 
+20 pins total 
+
+
+########################
 #SERVO MOTORS
 
-measure 80mm across - 
-seem to be a NEMA31 
-2.5 inch hole pattern 
-
+#measurement  
+80mm across, 64mm holes - NEMA31 
 
 #X MOTOR 
 YASKAWA USAREM-03CF2X -- 300W AC Servo Motor -- 3000 RPM, 2.7A w/ UTOP1-100VA
@@ -63,7 +71,13 @@ YASKAWA USASEM-07AF2X -- 700W AC Servo Motor -- 3000 RPM, 5.6A w/ UTOP1-100VR
 
 
 
+#########################
+#pulleys 
 
+1.8 inch dia
+ 30 teeth 
+ .6 inch belt 
+ .5 inch bore  (spindle dia)
 
 
 
