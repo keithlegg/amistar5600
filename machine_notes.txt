@@ -49,6 +49,11 @@ MR-20L honda
 
 20 pins total 
 
+########################
+#Timing belt 
+
+MBL S4.5M558 - long belt 
+MBL S4.5M329 - short belt 
 
 
 ########################
@@ -68,12 +73,26 @@ YASKAWA USASEM-07AF2X -- 700W AC Servo Motor -- 3000 RPM, 5.6A w/ UTOP1-100VR
 
 ########################
 #########################
-#pulleys 
 
+#original pulleys 
 1.8 inch dia
  30 teeth 
  .6 inch belt 
  .5 inch bore  (spindle dia)
+
+
+#in metric-ish:
+45.72  - dia 
+30     - teeth 
+15.24  - inch belt 
+12.7   - bore
+
+
+
+
+
+
+
 
 
 
