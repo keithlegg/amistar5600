@@ -1,0 +1,127 @@
+defaults for atmega2560
+
+
+1  RESET
+2  External Interrupt Request 0			   (INT0_vect)
+3  External Interrupt Request 1			   (INT1_vect)
+4  External Interrupt Request 2			   (INT2_vect)
+5  External Interrupt Request 3			   (INT3_vect)
+6  External Interrupt Request 4			   (INT4_vect)
+7  External Interrupt Request 5			   (INT5_vect)
+8  External Interrupt Request 6			   (INT6_vect)
+9  External Interrupt Request 7			   (INT7_vect)
+10 Pin Change Interrupt Request 0		   (PCINT0_vect)
+11 Pin Change Interrupt Request 1		   (PCINT1_vect)
+12 Pin Change Interrupt Request 2		   (PCINT2_vect)
+13 Watchdog Time-out Interrupt			   (WDT_vect)
+14 Timer/Counter2 Compare Match A		   (TIMER2_COMPA_vect)
+15 Timer/Counter2 Compare Match B		   (TIMER2_COMPB_vect)
+16 Timer/Counter2 Overflow			       (TIMER2_OVF_vect)
+17 Timer/Counter1 Capture Event			   (TIMER1_CAPT_vect)
+18 Timer/Counter1 Compare Match A		   (TIMER1_COMPA_vect)
+19 Timer/Counter1 Compare Match B		   (TIMER1_COMPB_vect)
+20 Timer/Counter1 Compare Match C          (TIMER1_COMPC_vect)
+21 Timer/Counter1 Overflow                 (TIMER1_OVF_vect)
+22 Timer/Counter0 Compare Match A		   (TIMER0_COMPA_vect)
+23 Timer/Counter0 Compare match B		   (TIMER0_COMPB_vect)
+24 Timer/Counter0 Overflow			       (TIMER0_OVF_vect)
+25 SPI Serial Transfer Complete			   (SPI_STC_vect)
+26 USART0 Rx Complete				       (USART0_RX_vect)
+27 USART0 Data Register Empty			   (USART0_UDRE_vect)
+28 USART0 Tx Complete				       (USART0_TX_vect)
+29 Analog Comparator				       (ANALOG_COMP_vect)
+30 ADC Conversion Complete			       (ADC_vect)
+31 EEPROM Ready					           (EE_READY_vect)
+32 Timer/Counter3 Capture Event			   (TIMER3_CAPT_vect)
+33 Timer/Counter3 Compare Match A		   (TIMER3_COMPA_vect)
+34 Timer/Counter3 Compare Match B		   (TIMER3_COMPB_vect)
+35 Timer/Counter3 Compare Match C		   (TIMER3_COMPC_vect)
+36 Timer/Counter3 Overflow			       (TIMER3_OVF_vect)
+37 USART1 Rx Complete				       (USART1_RX_vect)
+38 USART1 Data Register Empty			   (USART1_UDRE_vect)
+39 USART1 Tx Complete				       (USART1_TX_vect)
+40 2-wire Serial Interface			       (TWI_vect)
+41 Store Program Memory Ready SPM READY	   (SPM_READY_vect)
+42 Timer/Counter4 Capture Event			   (TIMER4_CAPT_vect)
+43 Timer/Counter4 Compare Match A		   (TIMER4_COMPA_vect)
+44 Timer/Counter4 Compare Match B		   (TIMER4_COMPB_vect)
+45 Timer/Counter4 Compare Match C		   (TIMER4_COMPC_vect)
+46 Timer/Counter4 Overflow                 (TIMER4_OVF_vect)
+47 Timer/Counter5 Capture Event            (TIMER5_CAPT_vect)
+48 Timer/Counter5 Compare Match A          (TIMER5_COMPA_vect)
+49 Timer/Counter5 Compare Match B		   (TIMER5_COMPB_vect)
+50 Timer/Counter5 Compare Match C		   (TIMER5_COMPC_vect)
+51 Timer/Counter5 Overflow			       (TIMER5_OVF_vect)
+52 USART2 Rx Complete				       (USART2_RX_vect)
+53 USART2 Data Register Empty			   (USART2_UDRE_vect)
+54 USART2 Tx Complete				       (USART2_TX_vect)
+55 USART3 Rx Complete				       (USART3_RX_vect)
+56 USART3 Data Register Empty		 	   (USART3_UDRE_vect)
+57 USART3 Tx Complete				       (USART3_TX_vect)
+
+
+
+##########################
+#CHANGE FUSE BITS 
+
+#DEFAULT FUSES 
+sudo avrdude -V -c usbtiny -p atmega169   
+
+
+## avrdude -p m2560 -c usbtiny -P /path/to/serial -b 115200 -F -U flash:w:/path/to/image.hex
+
+#default
+sudo avrdude -V -c usbtiny -p m2560 -U lfuse:w:0x42:m -U hfuse:w:0x99:m -U efuse:w:0xff:m 
+
+# external xtal with divide by 8
+sudo avrdude -V -c usbtiny -p m2560 -U lfuse:w:0x7f:m -U hfuse:w:0x99:m -U efuse:w:0xff:m 
+
+# external no divide by eight
+sudo avrdude -V -c usbtiny -p m2560  -U lfuse:w:0xff:m -U hfuse:w:0x99:m -U efuse:w:0xff:m 
+
+
+
+
+
+###########################
+
+#  #read the flash ram 
+#  avrdude -p attiny2313   -c usbtiny -U flash:r:flash.bin:r    ###  -P usb
+#  #write the flash back to a chip 
+#  avrdude -p attiny2313 -c usbtiny -U flash:w:flash.bin  ##-P usb
+#  #read the eeprom 
+#  #avrdude -p attiny2313   -c usbtiny  -U eeprom:r:eedump.hex:i
+#  avrdude -p attiny2313   -c usbtiny  -U eeprom:r:eedump.bin:r
+#  #write the eeprom back to a chip 
+#  avrdude -p attiny2313 -c usbtiny -U eeprom:w:eedump.bin  ##-P usb
+
+///////////////////////////////////
+
+SNIPETS
+
+
+//set baudrate
+#define baud 4800
+#define fosc 16000000UL
+#define UBBRVAL (((fosc / (baud * 16UL))) - 1) 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
