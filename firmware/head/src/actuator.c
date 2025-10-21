@@ -10,7 +10,6 @@
 
 
 
-
 #define BIT_ON 0x30 //logic high
 #define BIT_OFF 0x31 //logic low
 
@@ -19,50 +18,48 @@
 
 /***********************************************/
 
-/*
-
-    (17 bit address bus) I wired 17 high to test 
-    --------------------------------
-    address (L)  (H)    | CONTROL 
-           PORTC PORTL  | PORTD
-           [0-7] [8-13] | [1-3]  
-    --------------------------------
-    PORTL - address bus low   (7 bit)
-    PORTC - address bus high  (7 bit)
-    PORTK - data bus
-    PORTD - control bus       (3-4 bits)
+// UTIL functions 
 
 
-*/
+uint8_t idx_to_byte(uint8_t idx){
+    return (1 << idx);
+} 
 
 
 
 
-/*
+unsigned char invert_bits_1(unsigned char val)
+{
+    unsigned char tmp = 0;
+    unsigned char i;
+    if ( val )
+        return (0);
+    for ( i = 0; i < 8; i++)
+        if ( val & ( 1 << ( 7 - i ) ) )
+            tmp |= 1 << i;
+    return (tmp);
+}
 
-    (15 bit address bus)
-    --------------------------------
-    address (L)  (H)    | CONTROL 
-           PORTC PORTL  | PORTD
-           [0-7] [8-13] | [1-3]  
-    --------------------------------
-    PORTL - address bus low   (7 bit)
-    PORTC - address bus high  (7 bit)
-    PORTK - data bus
-    PORTD - control bus       (3 bits)
 
-
-*/
+unsigned char invert_bits_2(unsigned char old_val)
+{
+    unsigned char new_val = 0;
+    if (old_val & 0x01) new_val |= 0x80;
+    if (old_val & 0x02) new_val |= 0x40;
+    if (old_val & 0x04) new_val |= 0x20;
+    if (old_val & 0x08) new_val |= 0x10;
+    if (old_val & 0x10) new_val |= 0x08;
+    if (old_val & 0x20) new_val |= 0x04;
+    if (old_val & 0x40) new_val |= 0x02;
+    if (old_val & 0x80) new_val |= 0x01;
+    return(new_val);
+}
 
 
 /***********************************************/
 /***********************************************/
 
-//PORTD - CONTROL BUS - bits 1-3
-#define WE_PIN 0x01 
-#define OE_PIN 0x02
-#define CS_PIN 0x04  //CE is CS 
-#define CS2_PIN 0x08  //CE is CS 
+
 
 /***********************************************/
 
@@ -110,10 +107,6 @@ void print_byte( uint8_t data){
 }
 
 /***********************************************/
-uint8_t idx_to_byte(uint8_t idx){
-    return (1 << idx);
-} 
-
 
 void test_ports(void){
     int a=0;
@@ -126,6 +119,59 @@ void test_ports(void){
        _delay_ms(100);
     }       
 }
+
+
+/***********************************************/
+
+void invert_on(void){
+    int a=0;
+    for(a=0;a<8;a++){
+       PORTL = idx_to_byte(a);
+       _delay_ms(100);
+    }
+    for(a=0;a<8;a++){
+       PORTC = idx_to_byte(a);
+       _delay_ms(100);
+    }       
+}
+
+
+/***********************************************/
+
+int main (void)
+{
+
+    DDRC = 0xff;     
+    DDRL = 0xff;  
+    //DDRL = 0xff; 
+
+    //PORTD |= 0x08; 
+    //DDRD |= (0x4); // PORTD!
+    
+    //USART_Init(MYUBRR);
+    //USART_Transmit(0x41); 
+
+    uint16_t a = 0;
+
+    uint8_t foo = 0x08;
+
+    while(1)
+    {   
+        PORTL = invert_bits_2(foo); 
+        _delay_ms(1000);
+
+        PORTL = foo; 
+        _delay_ms(1000);
+
+    }
+
+
+} 
+
+/***********************************************/
+
+
+
 
 
 
@@ -174,40 +220,5 @@ void write_ram(uint16_t address, uint8_t byte){
 
 }
 */
-
-/***********************************************/
-
-int main (void)
-{
-
-    DDRC = 0xff;     
-    DDRL = 0xff;  
-    //DDRL = 0xff; 
-
-    //PORTD |= 0x08; 
-    //DDRD |= (0x4); // PORTD!
-    
-    //USART_Init(MYUBRR);
-    //USART_Transmit(0x41); 
-
-    uint16_t a = 0;
-
-    while(1)
-    {   
-        PORTC = 0xff;   
-        PORTL = 0xff; 
-        _delay_ms(1000);
-
-        PORTC = 0x00;   
-        PORTL = 0x00;   
-        _delay_ms(1000);
-
-    }
-
-
-} 
-
-/***********************************************/
-
 
 
