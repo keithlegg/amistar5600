@@ -7,6 +7,21 @@ manual says rotation is acurate to .01 degree
 
 
 
+###
+
+Each head has a pneumatic cylinder: 
+
+KOGANEI JDADS20X25
+
+
+
+###
+each cylinder has two sensors on it:
+
+CS9HA
+
+(3 wires, probably power, gnd signal likely a hall effect sensor)
+
 
 
 

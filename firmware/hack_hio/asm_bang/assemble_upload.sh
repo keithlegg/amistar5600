@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 #ASSEMBLE AND UPLOAD
 avr-gcc -Wall -Os -DF_CPU=16000000UL -mmcu=atmega328p  -o bitbangr.o ./asm/bitbang.S 2>&1
 avr-objcopy -j .text -j .data -O ihex bitbangr.o bitbangr.hex

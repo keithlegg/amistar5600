@@ -1,6 +1,8 @@
 
+
 PROJECT = marv
-SOURCES = src/ManchesterTX.c
+//SOURCES = src/ManchesterTX.c
+SOURCES = pcint.c
 
 
 
