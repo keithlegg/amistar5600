@@ -7,7 +7,18 @@ manual says rotation is acurate to .01 degree
 
 
 ##########################################################
-OMRON EE-SPX401 
+OMRON EE-SPX401 - head theta rotation sensor 
+
+
+
+PINOUT 
+
+|----|---5 to 24V
+|    |
+|    |---OUT
+|----|---GND 
+
+
 
 
 

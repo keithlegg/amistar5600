@@ -1,3 +1,80 @@
+
+
+#############################################
+#############################################
+#HIO BOARD NOTES 
+
+## ## ## ## ## ## ## ## 
+CN1 - CONNECTOR PINOUT (FROM BACK (TRACE SIDE) OF BOARD )
+CN1 - POWER TO BOARD 
+1   - 5 v
+2   - 5 v
+--
+3   - 5 v
+4   - 5 v
+--
+5   - GND  
+6   - GND 
+--
+7   - 24V
+8   - 24V
+--
+9   - 
+10  - 
+11  - 
+12  - 
+
+## ## ## ## ## ## ## ## 
+CN2 - SERIAL DATA CABLE - wired to MC34050 chip 
+CN2 - PINOUT (FROM BACK (TRACE SIDE) OF BOARD )
+
+1 - MC3450 Pin 11  - DR2 Out (active low) 
+2 - MC3450 Pin 10  - DR2 Out 
+3 - MC3450 Pin 6   - Rec2 In +
+4 - MC3450 Pin 7   - Rec2 In - 
+
+## ## ## ## 
+#notes on CN2 to DIF42
+
+DIF42 - PINOUT (FROM BACK (TRACE SIDE) OF BOARD )
+
+1 - GND
+2 - MC3450 Pin 1   - REC1 In- 
+3 - MC3450 Pin 2   - REC1 In+  ( pulled LOW through R72 )
+4 - MC3450 Pin 14  - DR1 out 
+5 - MC3450 Pin 13  - DR1 out (active low) 
+6 - GND
+
+
+
+
+
+
+
+
+
+## ## ## ## ## ## ## ## 
+CN3 - ANALOG PRESSURE SENSOR 
+CN3 - PINOUT (FROM BACK (TRACE SIDE) OF BOARD )
+
+1 - GND 
+2 - 12V               (schematics say 12V on page 11/25 )
+3 - pressure sensor 1 (analog signal)
+4 - pressure sensor 2 (analog signal)
+5 - pressure sensor 3 (analog signal)
+6 - breakout to CN4 - (probably pressure sensor 4 (analog signal))
+
+
+
+#############################################
+#############################################
+
+
+
+
+
+
+
 ########################
 ########################
 #HEAD NOTES 
