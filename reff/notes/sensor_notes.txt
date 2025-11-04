@@ -1,0 +1,73 @@
+########################
+########################
+#HEAD NOTES 
+there is a NEMA17 stepper with single position optical encoder
+manual says rotation is acurate to .01 degree 
+
+
+
+
+
+##########################################################
+SUNX FX-7 "PHOTOELECTRIC SENSOR"
+
+Brown  +V
+Black  OUT 
+Blue   0V
+Orange ALM 
+
+
+
+##########################################################
+#HEAD THETA ROTATION ENCODER 
+
+
+
+
+##########################################################
+#BOARD ARRIVAL 
+
+Yamatake Honeywell "Photoelectric sensor"
+PJ7-T3E
+
+
+
+##########################################################
+#BOARD ARRIVAL 
+
+
+
+Matsushita MQWN3A DC12-24V 
+
+brown  - (+) ??  (-  light on between this and pink wire)
+black  - Ground  (-  LOAD between this and  brown wire)
+blue   - 12-24V  (-  apperas to be negatove power source, brown is positive)
+pink   -         (-  light on between this and brown?) 
+
+
+##########################################################
+
+##HEAD UP DOWN 
+
+
+each mian head pneumatic cylinder has two sensors on it, presumably UP/DOWN states  
+
+Sensor part number - CS9HA
+
+
+not sure of wiring when I hook up like this: 
+
+Black = ground 
+orange = power (i ran it at 5V)
+blue = signal 
+
+
+appears to be a hall effect sensor, 
+led comes on dimly, if i move a magnet near it led switches on and output drops .5 volt to 0
+tested up to 8 volts - behavior deos not seem to change 
+
+
+
+
+
+

@@ -16,11 +16,22 @@ KOGANEI JDADS20X25
 
 
 ###
-each cylinder has two sensors on it:
+each cylinder has two sensors on it, presumably UP/DOWN states  
 
-CS9HA
+Sensor part number - CS9HA
 
-(3 wires, probably power, gnd signal likely a hall effect sensor)
+
+not sure of wiring when I hook up like this: 
+
+Black = ground 
+orange = power (i ran it at 5V)
+blue = signal 
+
+
+appears to be a hall effect sensor, 
+led comes on dimly, if i move a magnet near it led switches on and output drops .5 volt to 0
+tested up to 8 volts - behavior deos not seem to change 
+
 
 
 
