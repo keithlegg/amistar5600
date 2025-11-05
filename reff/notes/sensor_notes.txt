@@ -1,8 +1,4 @@
-########################
-########################
-#HEAD NOTES 
-there is a NEMA17 stepper with single position optical encoder
-manual says rotation is acurate to .01 degree 
+
 
 
 

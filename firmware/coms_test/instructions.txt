@@ -1,0 +1,35 @@
+
+
+
+##########################
+
+avr-gcc -DF_CPU=16000000UL -mmcu=atmega328p -o analog.out *.c 
+avr-objcopy -O ihex -R .eeprom analog.out analog.hex
+avrdude -V -c usbtiny -p atmega328p -b 19200 -P /dev/cuaU0 -U flash:w:analog.hex
+
+
+
+##########################
+#CHANGE FUSE BITS 
+
+#Your efuse error is because AVRDude reads unimplemented fuse bits as 0. That is, it appears that only the first 3 fuse bits (0x07 = 0b00000111) are used, so just write 0x07 to that fuse instead of 0xFF.
+
+
+#DEFAULT FUSES FOR ATTINY328p
+sudo avrdude -V -c usbtiny -p atmega328p -U lfuse:w:0x62:m -U hfuse:w:0xd9:m  
+
+#INTERNAL , NO DIVIDE BY 8 
+sudo avrdude -V -c usbtiny -p atmega328p -U lfuse:w:0xe2:m -U hfuse:w:0xd9:m  
+
+
+#external xtal - divide by 8 
+sudo avrdude -V -c usbtiny -p atmega328p -U lfuse:w:0x7f:m -U hfuse:w:0xd9:m  
+
+
+#external no divide by eight
+sudo avrdude -V -c usbtiny -p atmega328p  -U lfuse:w:0xff:m -U hfuse:w:0xd9:m  
+
+# arduino default fuses
+# sudo avrdude -V -c usbtiny -p atmega328p  -U lfuse:w:0xff:m -U hfuse:w:0xde:m  
+
+

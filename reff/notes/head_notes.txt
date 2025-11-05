@@ -2,6 +2,47 @@
 
 #############################################
 #############################################
+#HEAD NOTES 
+there is a NEMA17 stepper with single position optical encoder
+manual says rotation is acurate to .01 degree 
+
+
+
+#############################################
+#HEAD THETA (ROTATION)
+#each head has 3 wires going to the respective motor control 
+
+GND
+CC ROTATION  - 5V PWM 
+CCW ROTATION - 5V PWM
+
+#############################################
+#Each head has a pneumatic cylinder: 
+KOGANEI JDADS20X25
+
+
+
+###
+each cylinder has two sensors on it, presumably UP/DOWN states  
+
+Sensor part number - CS9HA
+
+
+not sure of wiring when I hook up like this: 
+
+Black = ground 
+orange = power (i ran it at 5V)
+blue = signal 
+
+
+appears to be a hall effect sensor, 
+led comes on dimly, if i move a magnet near it led switches on and output drops .5 volt to 0
+tested up to 8 volts - behavior deos not seem to change 
+
+
+
+#############################################
+#############################################
 #HIO BOARD NOTES 
 
 ## ## ## ## ## ## ## ## 
@@ -25,8 +66,8 @@ CN1 - POWER TO BOARD
 12  - 
 
 ## ## ## ## ## ## ## ## 
-CN2 - SERIAL DATA CABLE - wired to MC34050 chip 
-CN2 - PINOUT (FROM BACK (TRACE SIDE) OF BOARD )
+HIO CN2 - SERIAL DATA CABLE - wired to MC34050 chip 
+HIO CN2 - PINOUT (FROM BACK (TRACE SIDE) OF BOARD )
 
 1 - MC3450 Pin 11  - DR2 Out (active low) 
 2 - MC3450 Pin 10  - DR2 Out 
@@ -34,9 +75,8 @@ CN2 - PINOUT (FROM BACK (TRACE SIDE) OF BOARD )
 4 - MC3450 Pin 7   - Rec2 In - 
 
 ## ## ## ## 
-#notes on CN2 to DIF42
-
-DIF42 - PINOUT (FROM BACK (TRACE SIDE) OF BOARD )
+# HIO CN2 to DIF42 - other end of the cable 
+  DIF42 - PINOUT (FROM BACK (TRACE SIDE) OF BOARD )
 
 1 - GND
 2 - MC3450 Pin 1   - REC1 In- 
@@ -46,6 +86,8 @@ DIF42 - PINOUT (FROM BACK (TRACE SIDE) OF BOARD )
 6 - GND
 
 
+DATA IN TO DIF    = MC3450 Pin 3  
+DATA OUT FROM DIF = MC3450 Pin 15 (pulled LOW)
 
 
 
@@ -71,43 +113,6 @@ CN3 - PINOUT (FROM BACK (TRACE SIDE) OF BOARD )
 
 
 
-
-
-
-
-########################
-########################
-#HEAD NOTES 
-there is a NEMA17 stepper with single position optical encoder
-manual says rotation is acurate to .01 degree 
-
-
-
-
-###
-
-Each head has a pneumatic cylinder: 
-
-KOGANEI JDADS20X25
-
-
-
-###
-each cylinder has two sensors on it, presumably UP/DOWN states  
-
-Sensor part number - CS9HA
-
-
-not sure of wiring when I hook up like this: 
-
-Black = ground 
-orange = power (i ran it at 5V)
-blue = signal 
-
-
-appears to be a hall effect sensor, 
-led comes on dimly, if i move a magnet near it led switches on and output drops .5 volt to 0
-tested up to 8 volts - behavior deos not seem to change 
 
 
 
