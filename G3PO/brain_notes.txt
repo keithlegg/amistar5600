@@ -1,0 +1,34 @@
+
+
+
+https://forum.linuxcnc.org/27-driver-boards/30453-mesa-5i25-7i77-first-steps
+
+
+
+
+You would normally use the PNCConf wizard to create a basic LinuxCNC configuration, and I would certainly recommend that for getting all the files required for a configuration in the right place, and with the right layout and structure.
+
+However, it can sometimes be very useful to check things out first _without_ the complexity of getting a full LinuxCNC system up and running.
+
+Here is what I do when I get a new card. (And is actually what the HAL and INI files do, automatically, for you).
+
+Install just the 5i25 and power up the PC. Open a terminal window.
+
+halrun
+loadrt hostmot2
+loadrt hm2_pci
+loadrt threads
+addf hm2_5i25.0.read thread1
+addf hm2_5i25.0.write thread1
+start
+
+
+The first command sets up a realtime environment and starts an interactive HAL session.
+Then we load the main Mesa driver and the PCI card driver and create a realtime threa.
+The next lines add the read/write functions to the realtime thread, then start the thread running.
+
+You can now start to look at the HAL pins and even make the LEDs on the 5i25 change state.
+
+show pin
+setp hm2_5i25.0.led.CR01 1
+setp hm2_5i25.0.led.CR01 0

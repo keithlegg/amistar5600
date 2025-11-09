@@ -82,15 +82,12 @@ int main(){
   //uint8_t inout = 0;
   //unsigned char inout ;
 
-  USART_Transmit( 0x42 );
-  USART_Transmit( 0x43 );
-  USART_Transmit( 0x44 );
-
 
   while (1)
   {
-     echo_uart();
-     //_delay_ms(1000);
+     //echo_uart();
+     USART_Transmit( 0x40 );
+     _delay_ms(1000);
   }
   
 

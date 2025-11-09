@@ -76,21 +76,19 @@ void echo_uart(){
 int main(){
   DDRB = 0xFF; 
 
-  //USART_Init(103);
   USART_Init(MYUBRR);
-  
-  //uint8_t inout = 0;
-  //unsigned char inout ;
 
-  USART_Transmit( 0x42 );
-  USART_Transmit( 0x43 );
-  USART_Transmit( 0x44 );
+  uint8_t delay = 100;
+  unsigned char inout ;
 
 
   while (1)
   {
-     echo_uart();
-     //_delay_ms(1000);
+     inout = USART_receive();  
+     PORTB |= (1<<5);
+     _delay_ms(delay);
+     PORTB = 0x00;
+     _delay_ms(delay);     
   }
   
 

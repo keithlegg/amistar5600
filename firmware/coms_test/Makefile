@@ -4,9 +4,9 @@
 
 #PROJECT=serial_echo
 
-#PROJECT=transmitter
+PROJECT=transmitter
 
-PROJECT=reciever
+#PROJECT=reciever
 
 
 
