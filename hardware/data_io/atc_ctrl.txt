@@ -1,0 +1,13 @@
+see page 23/25 
+
+IFO3 PCB contains 4 driver chips 
+Drivers are "sink" type active logic low 
+
+
+Docs reference both "up/down" and "clamps" for ATC 
+
+contains many more driver circuits than the 4 on my machine, 
+presumably some machines have many more. 
+
+Maybe these can be used for other things?
+
