@@ -9,6 +9,14 @@ manual says rotation is acurate to .01 degree
 
 
 #############################################
+#HEAD THETA STEPPER MOTOR BELTS 
+
+#Part number 
+
+Bando 1121N15
+
+
+#############################################
 #HEAD THETA (ROTATION)
 #each head has 3 wires going to the respective motor control 
 

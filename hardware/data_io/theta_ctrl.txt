@@ -1,0 +1,23 @@
+
+
+##----------------------------
+# DIF CN13
+
+ 
+
+
+##----------------------------
+# DIF CN14
+# white stripe wires and GND 
+# solid are controls  ( PWM CC/CCW ) 
+
+- YW--> GND (GW/YW wires joined)
+- Y --> H2 PWM CCW
+- GW--> GND
+- G --> H2 PWM CC
+
+- BW--> GND (RW/BW wires joined)
+- B --> H1 PWM CCW
+- RW--> GND 
+- R --> H1 PWM CC
+
