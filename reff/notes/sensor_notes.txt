@@ -1,5 +1,27 @@
 
 
+##########################################################
+
+#LIMIT SENSOR WIRING   6X SPX401 - 25V 
+
+
+#-------------------------
+FIXED - AXIS Y -
+DIF39 - powers the 2 limit sensors (2X SPX401 on the left) @ 25V 
+DIF39 is 10 pin - 25V power 
+
+
+#-------------------------
+## mobile head - AXIS X -
+
+DIF44 powers 2 axis sensors on right side  (2X SPX401 on the mobile head)
+DIF44 is 8 pin 
+
+?? powers 1 axis sensors on left side  (SPX401 on the mobile head)
+ 
+
+
+
 
 
 ##########################################################
