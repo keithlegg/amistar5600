@@ -1,0 +1,53 @@
+
+
+sudo avrdude -V -c usbtiny -p ATtiny85
+
+
+#read fuse bits
+sudo avrdude -V -c usbtiny -p ATtiny85 -U hfuse:r:high.hex:i -U lfuse:r:low.hex:i 
+
+
+#OUTPUT FORMATS 
+i Intel Hex
+s Motorola S-record
+r raw binary; little-endian byte order, 
+
+
+################
+avr-gcc -DF_CPU=16000000UL -mmcu=attiny85 -o blink.out blink.c 
+avr-objcopy -O ihex -R .eeprom blink.out blink.hex
+avrdude -V -c usbtiny -p attiny85 -b 19200 -P /dev/cuaU0 -U flash:w:blink.hex
+################
+
+
+avr-gcc -DF_CPU=16000000UL -mmcu=attiny85 -o analog.out analog.c 
+
+
+avr-objcopy -O ihex -R .eeprom analog.out analog.hex
+
+
+avrdude -V -c usbtiny -p attiny85 -b 19200 -P /dev/cuaU0 -U flash:w:analog.hex
+
+
+
+##########################
+#CHANGE FUSE BITS 
+
+#DEFAULT FUSES FOR ATTINY85
+sudo avrdude -V -c usbtiny -p attiny85 -U lfuse:w:0x62:m -U hfuse:w:0xdf:m -U efuse:w:0xff:m   
+
+
+#EXTERNAL 8mhz OSCILATOR FOR TINY85
+sudo avrdude -V -c usbtiny -p attiny85 -U lfuse:w:0x62:m -U lfuse:w:0x4e:m -U hfuse:w:0xdf:m -U efuse:w:0xff:m  
+
+#EXTERNAL 8MHz NO divide by 8 
+sudo avrdude -V -c usbtiny -p attiny85 -U lfuse:w:0xce:m -U hfuse:w:0xdf:m -U efuse:w:0xff:m 
+
+
+
+
+##########################
+
+
+
+
