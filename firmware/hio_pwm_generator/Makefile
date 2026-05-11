@@ -1,7 +1,7 @@
 PROJECT=pwm
 
 
-SOURCES=./src/blink.c
+SOURCES=./src/square_wave.c
 
 
 ###########################
