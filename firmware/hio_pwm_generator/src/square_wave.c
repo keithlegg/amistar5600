@@ -12,15 +12,19 @@
 */
 
 
-#define sbi(a, b) (a) |= (1 << (b))
+#define sbi(a, b) (a) |=  (1 << (b))
 #define cbi(a, b) (a) &= ~(1 << (b))
 
 int main (void)
 {
-    DDRB = 0x01; 
+    DDRB  = 0x01; 
+    //PINB  = 0x00;
 
     while (1)
     {   
+
+
+         
         //pump the air solenoid while pin is high   
         if(PINB & 0x02)
         {
@@ -30,10 +34,12 @@ int main (void)
             cbi(PORTB,0);
             _delay_ms(del);
 
-        }else
+        }
+        else
         {
             PORTB=0x00;
-        }
+        } 
+
  
     }
 
