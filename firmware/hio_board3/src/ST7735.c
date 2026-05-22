@@ -27,8 +27,8 @@
 
 #define CTRL_PORT PORTE  // USE THIS PORT FOR SOFTWARE CONTROLED SPI CS LINES
 #define TFT_RST 0x04     // DONT THINK WE NEED THIS?
-#define TFT_DC 0x20      // SEEMS TO PULSE EVERY 4 OR SO BYTES - 32bit? 
-#define TFT_CS 0x10      // SPI SS/CS 
+#define TFT_DC 0x10      // SEEMS TO PULSE EVERY 4 OR SO BYTES - 32bit? 
+#define TFT_CS 0x20      // SPI SS/CS 
 
   
 
@@ -167,6 +167,15 @@ uint8_t StTextColor = ST7735_YELLOW;
 
 #define ST7735_GMCTRP1 0xE0
 #define ST7735_GMCTRN1 0xE1
+
+
+#define MADCTL_MY  0x80
+#define MADCTL_MX  0x40
+#define MADCTL_MV  0x20
+#define MADCTL_ML  0x10
+#define MADCTL_RGB 0x00
+#define MADCTL_BGR 0x08
+#define MADCTL_MH  0x04
 
 // standard ascii 5x7 font
 // originally from glcdfont.c from Adafruit project
@@ -719,20 +728,19 @@ void ST7735_InitR(enum initRFlags option) {
 // (same as Font table is encoded; different from regular bitmap)
 // Requires 11 bytes of transmission
 void setAddrWindow(uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1) {
+    writecommand(ST7735_CASET); // 0x2a -  Column addr set
+    writedata(0x00);
+    writedata(x0+ColStart);     // XSTART
+    writedata(0x00);
+    writedata(x1+ColStart);     // XEND
 
-  writecommand(ST7735_CASET); // 0x2a -  Column addr set
-  writedata(0x00);
-  writedata(x0+ColStart);     // XSTART
-  writedata(0x00);
-  writedata(x1+ColStart);     // XEND
+    writecommand(ST7735_RASET); // 0x2b - Row addr set
+    writedata(0x00);
+    writedata(y0+RowStart);     // YSTART
+    writedata(0x00);
+    writedata(y1+RowStart);     // YEND
 
-  writecommand(ST7735_RASET); // 0x2b - Row addr set
-  writedata(0x00);
-  writedata(y0+RowStart);     // YSTART
-  writedata(0x00);
-  writedata(y1+RowStart);     // YEND
-
-  writecommand(ST7735_RAMWR); // 0x2c - write to RAM
+    writecommand(ST7735_RAMWR); // 0x2c - write to RAM
 }
 
 
@@ -741,12 +749,12 @@ void setAddrWindow(uint16_t x0, uint16_t y0, uint16_t x1, uint16_t y1) {
 // Send two bytes of data, most significant byte first
 // Requires 2 bytes of transmission
 void pushColor(uint16_t color) {
-  CTRL_PORT |= TFT_DC;  //DC LOW       keith was here
-  CTRL_PORT &=~ TFT_CS; //TFT_CS_LOW   keith was here
+    CTRL_PORT |= TFT_DC;  //DC LOW       keith was here
+    CTRL_PORT &=~ TFT_CS; //TFT_CS_LOW   keith was here
 
-  spiwrite(color >> 8);
-  spiwrite(color);
-  CTRL_PORT |= TFT_CS; //TFT_CS HIGH   keith was here    
+    spiwrite(color >> 8);
+    spiwrite(color);
+    CTRL_PORT |= TFT_CS; //TFT_CS HIGH   keith was here    
 }
 
 
@@ -831,10 +839,10 @@ void ST7735_DrawFastHLine(int16_t x, int16_t y, int16_t w, uint16_t color) {
 //  screen is actually 129 by 161 pixels, x 0 to 128, y goes from 0 to 160
 
 void ST7735_FillScreen(uint16_t color) {
-  //IF I PASS A VARIABLE TO THIS IT GETS SET TO WRONG BITDEPTH
-  //RUNS TWICE AS SLOW AS EXPLICITLY TYPING NUMBERS  
-  //ST7735_FillRect(0, 0, _width, _height, color);  // original
-  ST7735_FillRect(0, 0, 128, 160, color);  // original  
+    //IF I PASS A VARIABLE TO THIS IT GETS SET TO WRONG BITDEPTH
+    //RUNS TWICE AS SLOW AS EXPLICITLY TYPING NUMBERS  
+    //ST7735_FillRect(0, 0, _width, _height, color);  // original
+    ST7735_FillRect(0, 0, 128, 160, color);    
 
 }
 
@@ -1040,42 +1048,42 @@ void ST7735_DrawCharS(uint8_t x, uint8_t y, char c, int16_t textColor, int16_t b
 //        size      number of pixels per character pixel (e.g. size==2 prints each pixel of font as 2x2 square)
 // Output: none
 void ST7735_DrawChar(uint8_t x, uint8_t y, char c, int16_t textColor, int16_t bgColor, uint8_t size){
-  uint8_t line; // horizontal row of pixels of character
-  int8_t col, row, i, j;// loop indices
-  if(((x + 5*size - 1) >= _width)  || // Clip right
-     ((y + 8*size - 1) >= _height) || // Clip bottom
-     ((x + 5*size - 1) < 0)        || // Clip left
-     ((y + 8*size - 1) < 0)){         // Clip top
-    return;
-  }
+    uint8_t line; // horizontal row of pixels of character
+    int8_t col, row, i, j;// loop indices
+    if(((x + 5*size - 1) >= _width)  || // Clip right
+       ((y + 8*size - 1) >= _height) || // Clip bottom
+       ((x + 5*size - 1) < 0)        || // Clip left
+       ((y + 8*size - 1) < 0)){         // Clip top
+      return;
+    }
 
-  setAddrWindow(x, y, x+6*size-1, y+8*size-1);
+    setAddrWindow(x, y, x+6*size-1, y+8*size-1);
 
-  line = 0x01;        // print the top row first
-  // print the rows, starting at the top
-  for(row=0; row<8; row=row+1){
-    for(i=0; i<size; i=i+1){
-      // print the columns, starting on the left
-      for(col=0; col<5; col=col+1){
-        if(Font[(c*5)+col]&line){
-          // bit is set in Font, print pixel(s) in text color
-          for(j=0; j<size; j=j+1){
-            pushColor(textColor);
-          }
-        } else{
-          // bit is cleared in Font, print pixel(s) in background color
-          for(j=0; j<size; j=j+1){
-            pushColor(bgColor);
+    line = 0x01;        // print the top row first
+    // print the rows, starting at the top
+    for(row=0; row<8; row=row+1){
+      for(i=0; i<size; i=i+1){
+        // print the columns, starting on the left
+        for(col=0; col<5; col=col+1){
+          if(Font[(c*5)+col]&line){
+            // bit is set in Font, print pixel(s) in text color
+            for(j=0; j<size; j=j+1){
+              pushColor(textColor);
+            }
+          } else{
+            // bit is cleared in Font, print pixel(s) in background color
+            for(j=0; j<size; j=j+1){
+              pushColor(bgColor);
+            }
           }
         }
+        // print blank column(s) to the right of character
+        for(j=0; j<size; j=j+1){
+          pushColor(bgColor);
+        }
       }
-      // print blank column(s) to the right of character
-      for(j=0; j<size; j=j+1){
-        pushColor(bgColor);
-      }
+      line = line<<1;   // move up to the next row
     }
-    line = line<<1;   // move up to the next row
-  }
 }
 
 
@@ -1112,14 +1120,14 @@ char Message[12];
 uint16_t Messageindex;
 
 void fillmessage(uint16_t n){
-// This function uses recursion to convert decimal number
-//   of unspecified length as an ASCII string
-  if(n >= 10){
-    fillmessage(n/10);
-    n = n%10;
-  }
-  Message[Messageindex] = (n+'0'); /* n is between 0 and 9 */
-  if(Messageindex<11)Messageindex++;
+    // This function uses recursion to convert decimal number
+    //   of unspecified length as an ASCII string
+    if(n >= 10){
+      fillmessage(n/10);
+      n = n%10;
+    }
+    Message[Messageindex] = (n+'0'); /* n is between 0 and 9 */
+    if(Messageindex<11)Messageindex++;
 }
 
 
@@ -1140,13 +1148,7 @@ void ST7735_SetCursor(uint16_t newX, uint16_t newY){
 }
 
 
-#define MADCTL_MY  0x80
-#define MADCTL_MX  0x40
-#define MADCTL_MV  0x20
-#define MADCTL_ML  0x10
-#define MADCTL_RGB 0x00
-#define MADCTL_BGR 0x08
-#define MADCTL_MH  0x04
+
 
 //------------ST7735_SetRotation------------
 // Change the image rotation.

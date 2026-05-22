@@ -8,23 +8,19 @@
    any function that begins with "send" sends data over UART
 
    //-----------------------------------
-   //ORIGINAL ADAFRUIT STUFF:
+   // ORIGINAL ADAFRUIT NOTES:
 
     3-5V Vin connects to the Arduino 5V pin 
-    GND connects to Arduino ground 
-    CLK connects to SPI clock. Digital 13. 
-        On Mega's, its Digital 52 and on Leonardo/Due its ICSP-3 (See SPI Connections for more details) 
+    GND  connects to Arduino ground 
+    CLK  connects to SPI clock. Digital 13. 
     MOSI connects to SPI MOSI.  Digital 11. 
-        On Mega's, its Digital 51 and on Leonardo/Due its ICSP-4 (See SPI Connections for more details) - this is the white wire
-    CS connects to our SPI Chip Select pin. 
-        We'll be using Digital 10 but you can later change this to any pin  
-    RST connects to our TFT reset pin.
-        We'll be using Digital 9 but you can later change this pin   
-    D/C connects to our SPI data/command select pin. 
-        We'll be using Digital 8 but you can later change this pin  
+    CS   connects to our SPI Chip Select pin. 
+    RST  connects to our TFT reset pin.
+    D/C  connects to our SPI data/command select pin. 
+ 
 
    //-----------------------------------
-   //OBSERVATIONS 
+   // OBSERVATIONS 
       SPI:
          MSB first - Leading edge 
          ~2us per byte speed estimate 
@@ -55,7 +51,7 @@
 
 #include <avr/pgmspace.h>
 
-//UART STUFF
+// UART STUFF
 #define FOSC 16000000UL
 #define BAUD 57600
 #define MYUBRR FOSC/16/BAUD-1
@@ -151,8 +147,14 @@ uint8_t terminal_mode = 1;  //be more chatty over serial for command feedback to
 
 
 
+/***********************************************/
 
+//lets you set an "index" to a bit - silly little reminder of how to do this sinmple task in code
+uint8_t idx_to_byte(uint8_t idx){
+    return (1 << idx);
+} 
 
+ /***********************************************/
 //I never did figure out char mapping but it uses this:
 //https://en.wikipedia.org/wiki/Code_page_437 
 void scribe_str(char *data) 
@@ -177,14 +179,14 @@ void scribe_str(char *data)
 }
 
 //*******************************************//
-/*
-   analog of send text byte - write a byte to screen as 1's and 0's
+ 
+//analog of send text byte - write a byte to screen as 1's and 0's
 
 void scribe_byte_astext( uint8_t data) 
 { 
    uint8_t ct = 0;
    uint8_t i = 0;
-   uint8_t ypos = y;
+   uint8_t ypos = cursor_y;
 
    cursor_y+=10;
    if(cursor_y>=160){
@@ -203,12 +205,12 @@ void scribe_byte_astext( uint8_t data)
  
 }
 
- 
+//*******************************************//
 void scribe_byte2_astext( uint16_t data) 
 { 
    uint8_t ct = 0;
    uint8_t i = 0;
-   uint8_t ypos = y;
+   uint8_t ypos = cursor_y;
 
    cursor_y+=10;
    if(cursor_y>=160){
@@ -228,12 +230,7 @@ void scribe_byte2_astext( uint16_t data)
 }
 
 
-*/
 
-//lets you set an "index" to a bit - silly little reminder of how to do this sinmple task in code
-uint8_t idx_to_byte(uint8_t idx){
-    return (1 << idx);
-} 
 
 /***********************************************/
 /*THESE USE GLOBALS INSTEAD OF RETURNING A VALUE!!!*/
@@ -267,19 +264,13 @@ uint16_t cvt_8x2_to_16(uint8_t msbin, uint8_t lsbin){
 
 void SPI_Init(void)
 {
+   //hardware SPI lines
    SPI_DDR  = 0xff;  //hardware SPI lines on PORTB
-   
-   //hardware SPI lines 
-   // Set MOSI and SCK, SS/CS output, all others input
-   //SPI_DDR = (1<<PB0) | (1<<PB1) | (1<<PB2);
-   
-
-   //software chip select lines  
+   //software chip select lines (TFT_CS , DC) 
    CTRL_DDR = 0xff;  //software controlled SPI/CS lines on PORTE
 
-   //SPCR |= (1<<MSTR)|(1<<SPE)|(1<<CPHA)|(1<<CPOL);  // SPI Master, SPI Enable, Trailing edge
    SPCR |= (1<<MSTR)|(1<<SPE);  // SPI Master, SPI Enable
-   SPSR |= SPI2X;
+   //SPSR |= SPI2X;
 
 }
 
@@ -406,43 +397,45 @@ void ST7735_DrawBitmapSRAM(uint8_t x, uint8_t y, uint16_t start, uint8_t w, uint
 */
 
 /***********************************************/
+// #define CTRL_PORT PORTE  // USE THIS PORT FOR SOFTWARE CONTROLED SPI CS LINES
+// #define TFT_RST 0x04     // DONT THINK WE NEED THIS?
+// #define TFT_DC 0x20      // SEEMS TO PULSE EVERY 4 OR SO BYTES - 32bit? 
+// #define TFT_CS 0x10      // SPI SS/CS 
+
+void test_ctrl_lines(void)
+{
+    //DDRE = 0xff; 
+    //PORTE &=~ 0x10;    
+    PORTE &=~ 0x20;  
+    //spiwrite(c);
+    //PORTE |= 0x10;  
+    PORTE |= 0x20; 
+}
+
 int main (void)
 {
+    SPI_Init();
 
-
-   //********************************************
-
-   SPI_Init();
+    ST7735_InitR(INITR_BLACKTAB);  
+    ST7735_FillScreen(0); //clear screen black 
    
+    uint16_t foo = 0xaaaa;
+    DDRE = 0xff;
 
-   // #define CTRL_PORT PORTE  // USE THIS PORT FOR SOFTWARE CONTROLED SPI CS LINES
-   // #define TFT_RST 0x04     // DONT THINK WE NEED THIS?
-   // #define TFT_DC 0x20      // SEEMS TO PULSE EVERY 4 OR SO BYTES - 32bit? 
-   // #define TFT_CS 0x10      // SPI SS/CS 
+    while(1)
+    { 
+        scribe_byte2_astext(foo);
+       
+        //bitmap_test();
+        //spiwrite(0xaa);
+        //writecommand(0xaa);
+        //writedata(0xaa);
 
-   ST7735_InitR(INITR_BLACKTAB);  
-   ST7735_FillScreen(0); //clear screen black 
-
-   while(1)
-   { 
-
-       ST7735_InitR(INITR_BLACKTAB);  
-       ST7735_FillScreen(0); //clear screen black 
-
-       //bitmap_test();
-       _delay_ms(100); 
+        //test_ctrl_lines();
  
+        _delay_ms(100); 
 
-
-   }
-
-
-   //********************************************
-   //init LCD screen 
-
-
-
-
+    }//while 1
 
 }//main
 
