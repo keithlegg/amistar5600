@@ -27,8 +27,8 @@
 
 #define CTRL_PORT PORTE  // USE THIS PORT FOR SOFTWARE CONTROLED SPI CS LINES
 #define TFT_RST 0x04     // DONT THINK WE NEED THIS?
-#define TFT_DC 0x10      // SEEMS TO PULSE EVERY 4 OR SO BYTES - 32bit? 
-#define TFT_CS 0x20      // SPI SS/CS 
+#define TFT_DC 0x20      // SEEMS TO PULSE EVERY 4 OR SO BYTES - 32bit? 
+#define TFT_CS 0x10      // SPI SS/CS 
 
   
 

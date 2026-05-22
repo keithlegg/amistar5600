@@ -1,0 +1,13 @@
+
+
+
+
+
+
+loadrt [EMCMOT]EMCMOT 
+servo_period_nsec=[EMCMOT]SERVO_PERIOD 
+num_joints=[TRAJ]AXES num_dio=33 
+
+
+, this makes it 33 digital io, 
+num_dio: Maximum number of digital inputs is set by EMCMOT_MAX_DIO. I think its 64

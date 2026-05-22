@@ -277,8 +277,8 @@ void SPI_Init(void)
    //software chip select lines  
    CTRL_DDR = 0xff;  //software controlled SPI/CS lines on PORTE
 
-   SPCR |= (1<<MSTR)|(1<<SPE)|(1<<CPHA)|(1<<CPOL);  // SPI Master, SPI Enable, Trailing edge
-   //SPCR |= (1<<MSTR)|(1<<SPE);  // SPI Master, SPI Enable
+   //SPCR |= (1<<MSTR)|(1<<SPE)|(1<<CPHA)|(1<<CPOL);  // SPI Master, SPI Enable, Trailing edge
+   SPCR |= (1<<MSTR)|(1<<SPE);  // SPI Master, SPI Enable
    SPSR |= SPI2X;
 
 }
@@ -423,15 +423,15 @@ int main (void)
    ST7735_InitR(INITR_BLACKTAB);  
    ST7735_FillScreen(0); //clear screen black 
 
-   //commonInit();
-
    while(1)
    { 
 
-       
        ST7735_InitR(INITR_BLACKTAB);  
        ST7735_FillScreen(0); //clear screen black 
-       _delay_ms(100);
+
+       //bitmap_test();
+       _delay_ms(100); 
+ 
 
 
    }
