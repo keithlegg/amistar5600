@@ -20,24 +20,29 @@
  
 
    //-----------------------------------
-   // OBSERVATIONS 
-      SPI:
-         MSB first - Leading edge 
-         ~2us per byte speed estimate 
+   // MY NOTES 
 
-     DC IS LOW FOR CMDS (ST7735_SWRESET, ETC) - FOR "ARGS" IT IS HIGH
-     ADAFRUIT CODE CALLS DC  "RS" or "_rs"
+   fuse bits (chinese board ) -l 0xff -h 0x99
+
+ 
+   SPI:
+       4 bits per chunk 
+       MSB first - Leading edge 
+       ~2us per byte speed estimate 
+
+       DC IS LOW FOR CMDS (ST7735_SWRESET, ETC) - FOR "ARGS" IT IS HIGH
+       ADAFRUIT CODE CALLS DC  "RS" or "_rs"
 
    //-----------------------------------
    // HARDWARE WIRING 
-   pin8   | PB0 | D/C
-   pin9   | PB1 | NC           - RESET HARDWIRED HIGH 
-   pin10  | PB2 | SPI ENABLE   - TFT_CS 
-   pin11  | PB3 | SPI MOSI     - WE RUN AS SPI MASTER 
-   pin12  | PB4 | NC - MISO    - NOT USED 
-   pin13  | PB5 | SPI CLOCK    - 
+   pin8   | PE4 | D/C          - (soft) data command - PORTE4, ARDUINO 2
+   pin9   |  .  | NC           -        RESET HARDWIRED HIGH 
+   pin10  | PE5 | SPI ENABLE   - (soft) TFT_CS      - PORTE4, ARDUINO 3
+   pin11  | PB2 | SPI MOSI     -        RUNS AS SPI MASTER 
+   pin12  | PB4 | NC - MISO    -        NOT USED 
+   pin13  | PB1 | SPI CLOCK    - 
    +5/+3  |     | RESET 
-          |     | NC - CARD_CS 
+          |  .  | NC - CARD_CS 
 
    //-----------------------------------
 
@@ -389,28 +394,8 @@ void ST7735_DrawBitmapSRAM(uint8_t x, uint8_t y, uint16_t start, uint8_t w, uint
 }
 */
 
-/*
-#define CTRL_PORT PORTE  // USE THIS PORT FOR SOFTWARE CONTROLED SPI CS LINES
-#define TFT_DC 0x01      //  AVR_PF0  // SEEMS TO PULSE EVERY 4 OR SO BYTES - 32bit? 
-#define TFT_RST 0x04     //  AVR_PF1  // DONT THINK WE NEED THIS?
-#define TFT_CS 0x10      //  AVR_PE4  // SPI SS/CS 
-*/
-
 /***********************************************/
-// #define CTRL_PORT PORTE  // USE THIS PORT FOR SOFTWARE CONTROLED SPI CS LINES
-// #define TFT_RST 0x04     // DONT THINK WE NEED THIS?
-// #define TFT_DC 0x20      // SEEMS TO PULSE EVERY 4 OR SO BYTES - 32bit? 
-// #define TFT_CS 0x10      // SPI SS/CS 
 
-void test_ctrl_lines(void)
-{
-    //DDRE = 0xff; 
-    //PORTE &=~ 0x10;    
-    PORTE &=~ 0x20;  
-    //spiwrite(c);
-    //PORTE |= 0x10;  
-    PORTE |= 0x20; 
-}
 
 int main (void)
 {
