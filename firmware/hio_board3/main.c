@@ -1,6 +1,7 @@
 /*
-   Keith Legg Jan 7 - 2016
-   Developed on an ATMega328p 
+   Keith Legg 
+   created  - Jan 7 - 2016
+   modified - May 22, 2026 
 
 
    any function that begins with "scribe" draws on the LCD screen
@@ -22,8 +23,9 @@
    //-----------------------------------
    // MY NOTES 
 
-   fuse bits (chinese board ) -l 0xff -h 0x99
-
+   # running on this board 
+   # https://www.amazon.com/CH340G-ATMEGA2560-16AU-pinheaders-Compatible-Mega2560/dp/B0GWX3BLY2
+   (working) fuse bits -l 0xff -h 0x99
  
    SPI:
        4 bits per chunk 
@@ -77,60 +79,6 @@
 uint8_t cursor_x = 0;
 uint8_t cursor_y = 0;
 
-//#include <avr/pgmspace.h>
-
-
- 
-
-/***********************************************/
-/* * * * known commands * * * */
-
-//6502 core system
-#define CMD_RST_6502 0x72        //r - reset 6502
-#define CMD_HALT_6502 0x68       //h - halt 6502 clocking
-#define CMD_RESUM_6502 0x63      //c - resume 6502 clocking 
-
-//"boundary scan" vision of features
-#define CMD_SET_ADDR_BUS 0x61    //a  2 bytes in
-#define CMD_GET_ADDR_BUS 0x62    //b  2 bytes out
-#define CMD_SET_DATA_BUS 0x65    //e  1 byte in  
-#define CMD_GET_DATA_BUS 0x66    //f  1 byte out
-
-
-#define CMD_NES_DRAW 0x6e        //n 
-#define CMD_CLR_SCRN 0x4e        //N 
-#define CMD_BITMAP 0x42          //B  //DRAW SRAM DIRECTLY
-#define CMD_BITMAP2 0x43         //C  //copy AVR-SRAM DRAW SRAM
-#define CMD_BITMAP3 0x44         //D  //draw AVR BITMAP
-
-//uart related
-#define CMD_ECHO 0x71            //q - test serial port echo 
-#define CMD_TX_SRAM 0x64         //d - download sram from 6502
-#define CMD_RX_SRAM 0x75         //u - upload sram into 6502
-
-//memory related
-//#define CMD_SET_MEMLOC 0x6a    //j  3 bytes in        (addr X2,  data)  
-//#define CMD_GET_MEMLOC 0x6b    //k  1 byte out
-#define CMD_PEEKRANGE 0x50       //P - look at memory range (2X16bit     args)       
-#define CMD_PEEK_6502 0x70       //p - look at memory       (2X8bit      args)
-#define CMD_POKE_6502 0x6f       //o - set memory           (1X16bit 1X8 args) 
-//#define CMD_POKERANGE 0x50     //P - look at memory range (2X16bit     args)   
-
-#define CMD_FREERUN 0x7a         //z - flood RAM with NOP's
-#define CMD_ZEROSRAM 0x78        //x - flood RAM with 0's
-#define CMD_TESTSRAM 0x74        //t - flood RAM with index%256 
-
-#define CMD_SHOWINTERNALS 0x73     //s - show global numeric buffer  
-#define CMD_SET_INTERNALS 0x53     //S - set  global numeric buffer  (4 bytes?) 
-#define CMD_SET_SPRITE_XY 0x54    //T - set  global numeric buffer  (2 bytes)    
-
-//#define CMD_TOGGLE_TERMODE 0x54 //T - toggle terminal mode 
-
-
-
-/* * * * known commands * * * */
-/***********************************************/
-
 //standard buffers for 8 to 16 bit stitching and unwrapping
 //often we just need 3 bytes (2 addr+1 data) in that case ignore com_msb2
 uint8_t buf1_lsb = 0;
@@ -138,28 +86,7 @@ uint8_t buf1_msb = 0;
 uint8_t buf2_lsb = 0;
 uint8_t buf2_msb = 0;
 
-uint16_t buf1_16 = 0;
-uint16_t buf2_16 = 0;
-
-uint16_t sprite_xy = 0; //packed value two bytes 
-
-
-//STATES FOR MACHINE BIOS 
-uint8_t ishalted = 1;       //start out halted
-
-//in NON terminal mode - send ACK after each command?
-uint8_t terminal_mode = 1;  //be more chatty over serial for command feedback to humans (instead of python)
-
-
-
 /***********************************************/
-
-//lets you set an "index" to a bit - silly little reminder of how to do this sinmple task in code
-uint8_t idx_to_byte(uint8_t idx){
-    return (1 << idx);
-} 
-
- /***********************************************/
 //I never did figure out char mapping but it uses this:
 //https://en.wikipedia.org/wiki/Code_page_437 
 void scribe_str(char *data) 
@@ -405,20 +332,12 @@ int main (void)
     ST7735_FillScreen(0); //clear screen black 
    
     uint16_t foo = 0xaaaa;
-    DDRE = 0xff;
-
+ 
     while(1)
     { 
         scribe_byte2_astext(foo);
-       
-        //bitmap_test();
-        //spiwrite(0xaa);
-        //writecommand(0xaa);
-        //writedata(0xaa);
 
-        //test_ctrl_lines();
- 
-        _delay_ms(100); 
+        _delay_ms(300); 
 
     }//while 1
 
