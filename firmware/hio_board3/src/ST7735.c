@@ -1,17 +1,12 @@
 
-
 /*
-  ADAFRUITS CODE TRANSLATED TO Jonathan Valvano's TO MY OWN CUSTOM C LIBRARY   
+    Built on code from Adafruit and Jonathan Valvano.  
 
-  https://github.com/adafruit/Adafruit-ST7735-Library
-  http://users.ece.utexas.edu/~valvano/arm/
-
-  THE GODDAMN SPI FUNCTION RETURNED ALL 255s IF IT WAS DECLARED STATIC!!!!!
-  GOTCHA!!! - LOST 4 HOURS OF MY LIFE ON THIS
-
+    https://github.com/adafruit/Adafruit-ST7735-Library
+    http://users.ece.utexas.edu/~valvano/arm/
 */
 
-#include <avr/pgmspace.h>  //store data in ROM?
+#include <avr/pgmspace.h>   
 
 #include <avr/io.h>
 #define F_CPU 16000000UL
@@ -23,8 +18,8 @@
 
 #include "ST7735.h"
 
-
-
+/*******************/
+//set up the software control lines for SPI 
 #define CTRL_PORT PORTE  // USE THIS PORT FOR SOFTWARE CONTROLED SPI CS LINES
 #define TFT_RST 0x04     // DONT THINK WE NEED THIS?
 #define TFT_DC 0x10      // SEEMS TO PULSE EVERY 4 OR SO BYTES - 32bit? 
