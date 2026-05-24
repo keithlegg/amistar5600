@@ -9,6 +9,27 @@
 #define BAUD 57600
 #define MYUBRR FOSC/16/BAUD-1
 
+/*
+PINOUTS
+
+
+    SN75ALS171 transciever 
+    xR    -
+    1DE   - PORTD4
+    CDE   - PORTD3
+    xD    - (input) DE,CDE HIGH == 
+            HIGH ON D IS A HIGH, B LOW, 
+            LOW ON D is A LOW , B HIGH  
+    xB    -
+    xA    -
+    RE    - PORTD2
+
+
+*/
+
+#define sbi(a, b) (a) |= (1 << (b))
+#define cbi(a, b) (a) &= ~(1 << (b))
+
 
 //*************************************************************
 //USART_init: initializes the USART system
@@ -72,27 +93,67 @@ void echo_uart(){
 
 
 //*******************************************//
-
-int main(){
-  DDRB = 0xFF; 
-
-  //USART_Init(103);
-  USART_Init(MYUBRR);
-  
-  //uint8_t inout = 0;
-  //unsigned char inout ;
-
-
-  while (1)
-  {
-     //echo_uart();
-     USART_Transmit( 0x40 );
-     _delay_ms(1000);
-  }
-  
-
- return 1;
+void test_pins()
+{
+    sbi(PORTD,1);
+    _delay_ms(200);
+    
+    cbi(PORTD,1);
+    _delay_ms(200); 
 }
+
+//-------------
+void blink_led(void)
+{
+    PORTB |= (1<<5);
+    _delay_ms(200);
+    PORTB = 0x00;
+    _delay_ms(200);     
+}
+
+//-------------
+//set RE,CDE, 1DE - HIGH 
+void set_txmode(void)
+{
+    // RE  = PD2
+    // CDE = PD3
+    // 1DE = PD4
+
+    PORTD |= (1<<PD2) | (1<<PD3) | (1<<PD4);
+
+}
+
+//-------------
+//set DE,CDE 
+void set_rxmode(void)
+{
+
+}
+
+//-------------
+
+int main()
+{
+    DDRB = 0xFF;  //LED  out 
+    DDRD = 0xFF;  //CTRL out 
+ 
+    USART_Init(MYUBRR);
+
+
+
+    set_txmode();
+
+    while (1)
+    {
+        blink_led();
+        //test_pins();
+        USART_Transmit(0xaa);
+    }
+
+
+    return 1;
+}
+
 
 
 
