@@ -2,7 +2,7 @@
 
 
 
-#PROJECT=serial_echo
+ 
 
 PROJECT=transmitter
 

@@ -10,6 +10,28 @@
 #define MYUBRR FOSC/16/BAUD-1
 
 
+
+/*
+PINOUTS
+
+
+    SN75ALS171 transciever 
+    xR    -
+    1DE   - PORTD4
+    CDE   - PORTD3
+    xD    - (input) DE,CDE HIGH == 
+            HIGH ON D IS A HIGH, B LOW, 
+            LOW ON D is A LOW , B HIGH  
+    xB    -
+    xA    -
+    RE    - PORTD2
+
+
+*/
+
+#define sbi(a, b) (a) |= (1 << (b))
+#define cbi(a, b) (a) &= ~(1 << (b))
+
 //*************************************************************
 //USART_init: initializes the USART system
 //*************************************************************
@@ -99,7 +121,12 @@ void set_rxmode(void)
     // CDE = PD3
     // 1DE = PD4
 
-    PORTD |= (1<<PD2) | (1<<PD3) | (1<<PD4);
+    cbi(PORTD,2); //recieve mode is active low 
+    
+    //cbi(PORTD,3); //recieve mode is active low 
+
+    PORTD |=  (1<<PD3) | (1<<PD4);
+
 
 }
 
@@ -109,7 +136,8 @@ void set_rxmode(void)
 
 int main()
 {
-    DDRB = 0xFF; 
+    DDRB = 0xFF;  //LED  out 
+    DDRD = 0xFF;  //CTRL out 
 
     USART_Init(MYUBRR);
 
@@ -120,13 +148,15 @@ int main()
 
     while (1)
     {
-       inout = USART_receive();  
-       PORTB |= (1<<5);
-       _delay_ms(delay);
-       PORTB = 0x00;
-       _delay_ms(delay);     
+        inout = USART_receive();  
+        if(inout==0xaa)
+        {
+            blink_led();    
+        }
+         
+
     }
-  
+
 
     return 1;
 }
