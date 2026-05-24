@@ -1,5 +1,69 @@
-/*
+#include <avr/io.h>
 
+#define F_CPU 16000000UL //AVR Clock Speed in MHZ
+#define FOSC 16000000    // Clock Speed
+
+//UART STUFF
+#define BAUD 57600
+#define MYUBRR FOSC/16/BAUD-1
+
+
+#include <util/delay.h>
+
+#include "serial.h"
+
+
+#define BIT_ON 0x30   //logic high
+#define BIT_OFF 0x31  //logic low
+
+
+//standard buffers for 8 to 16 bit stitching and unwrapping
+//often we just need 3 bytes (2 addr+1 data) in that case ignore com_msb2
+extern uint8_t buf1_lsb;
+extern uint8_t buf1_msb;
+extern uint8_t buf2_lsb;
+extern uint8_t buf2_msb;
+
+extern uint16_t buf1_16;
+
+
+/***********************************************/
+//static uint8_t UART_receive(void)
+uint8_t UART_receive(void)
+{
+    while (!(UCSR0A & (1 << RXC0))) {}
+    return UDR0;
+}
+
+void UART_Transmit( unsigned char data )
+{
+  while ( !( UCSR0A & (1<<UDRE0)) );
+  UDR0 = data;
+}
+
+
+/***********************************************/
+
+void print_byte( uint8_t data){
+   uint8_t i = 0;
+
+   for (i=0; i<=7; i++) {
+       //if ( !!(data & (1 << ii)) ){  // LSB
+       if ( !!(data & (1 << (7 - i))) ){  // MSB
+           UART_Transmit( BIT_OFF );
+       }else{
+           UART_Transmit( BIT_ON );
+       }
+    }
+    UART_Transmit( 0xa ); //CHAR_TERM = new line  
+    UART_Transmit( 0xd ); //0xd = carriage return
+}
+
+
+
+
+ 
+/***********************************************/
 void send_txt_byte( uint8_t data, uint8_t use_newline){
    uint8_t i = 0;
 
@@ -19,6 +83,7 @@ void send_txt_byte( uint8_t data, uint8_t use_newline){
 }
 
 
+/***********************************************/
 //for printing internal 16 bit numbers - all serial related I/O is bytesX2
 void send_txt_2bytes( uint16_t data, uint8_t use_newline,  uint8_t use_space){
    uint8_t i = 0;
@@ -44,7 +109,7 @@ void send_txt_2bytes( uint16_t data, uint8_t use_newline,  uint8_t use_space){
 }
 
 
-
+/***********************************************/
 void UART_Init( unsigned int ubrr)
 {
     UBRR0H = (unsigned char)(ubrr>>8);
@@ -57,20 +122,7 @@ void UART_Init( unsigned int ubrr)
 }
 
 
-//static uint8_t UART_receive(void)
-uint8_t UART_receive(void)
-{
-    while (!(UCSR0A & (1 << RXC0))) {}
-    return UDR0;
-}
-
-void UART_Transmit( unsigned char data )
-{
-  while ( !( UCSR0A & (1<<UDRE0)) );
-  UDR0 = data;
-}
-
-
+/***********************************************/
 void UARTWriteStr(char *data) 
 { 
    while(*data){ 
@@ -79,7 +131,7 @@ void UARTWriteStr(char *data)
 }
 
 
-
+/***********************************************/
 unsigned char y[20]; // in main
 unsigned char len;
 
@@ -110,14 +162,16 @@ unsigned char uartrecieve(unsigned char *x, unsigned char size)
 //only if the RXCIEn bit is written to one, the Global Interrupt Flag in SREG is written to one and the RXCn bit in
 //UCSRnA is set.
 
+/***********************************************/
+/*
 void init_uart_interrupt(){
    UCSR0B |= (1 << RXCIE0); // Enable the UART Recieve Complete interrupt (UART_RXC) 
    //sei(); // Enable the Global Interrupt Enable flag so that interrupts can be processed 
 }
+*/
 
 
-
-
+/***********************************************/
 void echo_uart(void){
     uint8_t buf = UART_receive();
     send_txt_byte(buf, 1);
@@ -125,8 +179,10 @@ void echo_uart(void){
 }
 
 
-//   DEBUG - NOT DONE YET 
 
+/***********************************************/
+/*
+//   DEBUG - NOT DONE YET 
 void tx_bytes(uint16_t startaddr, uint16_t numbytes)
 {
      uint16_t b = 0;
@@ -137,18 +193,19 @@ void tx_bytes(uint16_t startaddr, uint16_t numbytes)
          while ( !( UCSR0A & (1<<UDRE0)) );
          UDR0 = tmp;
 
-         //flash LEDS to indicate we are working on sending data 
-         if(b%512==0){
-             LED_RGB_PORT^=0x02;//red 
-         } 
-         if(b%2048==0){
-             LED_RGB_PORT^=0x01; //green  
-         } 
+         ////flash LEDS to indicate we are working on sending data 
+         //if(b%512==0){
+         //    LED_RGB_PORT^=0x02;//red 
+         //} 
+         //if(b%2048==0){
+         //    LED_RGB_PORT^=0x01; //green  
+         //} 
          
      }//B-Y
 }
+*/
 
-
+/***********************************************/
 uint16_t rx_two_bytes(void){
     uint8_t c1 =  UART_receive();//lsb addr
     uint8_t c2 =  UART_receive();//msb addr
@@ -158,7 +215,7 @@ uint16_t rx_two_bytes(void){
 
 }
  
- 
+ /***********************************************/
  //helper to grab arguments for commands over serial port 
  void rx_three_bytes(void){
     uint8_t c1 =  UART_receive();//lsb addr
@@ -169,7 +226,7 @@ uint16_t rx_two_bytes(void){
     scribe_str("3 bytes received.");
  }
  
- 
+/***********************************************/
 //helper to grab arguments for commands over serial port 
 void rx_four_bytes(void){
     // uint8_t c1 =  UART_receive();//lsb addr
@@ -189,4 +246,6 @@ void rx_four_bytes(void){
     scribe_str("4 bytes received.");
 }
 
-*/
+ 
+
+

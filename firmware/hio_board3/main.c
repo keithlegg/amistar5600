@@ -86,6 +86,9 @@ uint8_t buf1_msb = 0;
 uint8_t buf2_lsb = 0;
 uint8_t buf2_msb = 0;
 
+
+uint16_t buf1_16 = 0;
+
 /***********************************************/
 //I never did figure out char mapping but it uses this:
 //https://en.wikipedia.org/wiki/Code_page_437 

@@ -2,7 +2,9 @@
 
 
 
-SOURCES = main.c src/ST7735.c
+#SOURCES = main.c src/ST7735.c
+
+SOURCES = main.c src/ST7735.c src/actuator.c src/serial.c
 
  
 
