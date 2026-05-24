@@ -54,9 +54,15 @@
 
 #include <avr/io.h>
 #include <util/delay.h>
-#include "src/ST7735.h"
+
 
 #include <avr/pgmspace.h>
+
+
+
+#include "src/ST7735.h"
+#include "src/serial.h"
+#include "src/actuator.h"
 
 // UART STUFF
 #define FOSC 16000000UL
