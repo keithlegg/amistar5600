@@ -27,6 +27,22 @@ extern uint8_t buf2_msb;
 extern uint16_t buf1_16;
 
 
+
+
+
+/***********************************************/
+void UART_Init( unsigned int ubrr)
+{
+    UBRR0H = (unsigned char)(ubrr>>8);
+    UBRR0L = (unsigned char)ubrr;
+    UCSR0B = (1<<RXEN0)|(1<<TXEN0);
+    
+    //DOH !! RUN AT FULL SPEED 115K!!!
+    UCSR0A |= (1<<U2X0); //DAMN DAMN DAMN - HOW DID I NOT FIND THIS SOONER????
+
+}
+
+
 /***********************************************/
 //static uint8_t UART_receive(void)
 uint8_t UART_receive(void)
@@ -35,11 +51,27 @@ uint8_t UART_receive(void)
     return UDR0;
 }
 
+
+
+/***********************************************/
 void UART_Transmit( unsigned char data )
 {
   while ( !( UCSR0A & (1<<UDRE0)) );
   UDR0 = data;
 }
+
+
+/***********************************************/
+void USART_tx_string( char *data )
+{
+    while ((*data != '\0'))
+    {
+        while (!(UCSR0A & (1 <<UDRE0)));
+        UDR0 = *data;
+        data++;
+    }   
+}
+
 
 
 /***********************************************/
@@ -109,17 +141,6 @@ void send_txt_2bytes( uint16_t data, uint8_t use_newline,  uint8_t use_space){
 }
 
 
-/***********************************************/
-void UART_Init( unsigned int ubrr)
-{
-    UBRR0H = (unsigned char)(ubrr>>8);
-    UBRR0L = (unsigned char)ubrr;
-    UCSR0B = (1<<RXEN0)|(1<<TXEN0);
-    
-    //DOH !! RUN AT FULL SPEED 115K!!!
-    UCSR0A |= (1<<U2X0); //DAMN DAMN DAMN - HOW DID I NOT FIND THIS SOONER????
-
-}
 
 
 /***********************************************/
