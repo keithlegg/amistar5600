@@ -333,45 +333,61 @@ void ST7735_DrawBitmapSRAM(uint8_t x, uint8_t y, uint16_t start, uint8_t w, uint
 
 /***********************************************/
 
+void test_tx(void)
+{
+    UART_transmit(0xaa); 
+}
 
-int main (void)
+
+void test_rx(void)
 {
     /*
-    SPI_Init();
+    //DECALRE THIS OUTSIDE OF LOOP
+    //    unsigned char inout ;
+    inout = UART_receive();  
+    if(inout==0xaa)
+    {
+        blink_led();    
+    }*/
+}
 
+void test_lcd(void)
+{
+
+    scribe_byte2_astext(0xf0f0);
+    _delay_ms(300); 
+}
+
+void init_lcd(void)
+{
+    SPI_Init();
     ST7735_InitR(INITR_BLACKTAB);  
     ST7735_FillScreen(0); //clear screen black 
-   
-    uint16_t foo = 0xaaaa;
- 
-    while(1)
-    { 
-        scribe_byte2_astext(foo);
-        _delay_ms(300); 
+}
 
-    }//while 1
-    */
-    
+/***********************************************/
+int main (void)
+{
+
     init_ob_led();
     
     UART_Init(MYUBRR);
 
     init_transceiver();
     
+    init_lcd();
+
     //set_txmode();
     set_rxmode();
-
-    unsigned char inout ;
+    unsigned char inout;
+    
     while (1)
     {
-         
+          
         inout = UART_receive();  
-        if(inout==0xaa)
-        {
-            blink_led();    
-        }
+        scribe_byte_astext(inout);
+        _delay_ms(100);         
 
-        //UART_transmit(0xaa); 
     }
 
 }//main

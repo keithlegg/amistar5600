@@ -4,9 +4,10 @@
 
  
 
-PROJECT=transmitter
-
+#PROJECT=transmitter
 #PROJECT=reciever
+
+PROJECT=usb_send
 
 
 
