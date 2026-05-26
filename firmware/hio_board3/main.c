@@ -59,8 +59,9 @@
 #include <avr/pgmspace.h>
 
 
-
 #include "src/ST7735.h"
+
+#include "src/hio_util.h"
 #include "src/serial.h"
 #include "src/actuator.h"
 
@@ -335,6 +336,7 @@ void ST7735_DrawBitmapSRAM(uint8_t x, uint8_t y, uint16_t start, uint8_t w, uint
 
 int main (void)
 {
+    /*
     SPI_Init();
 
     ST7735_InitR(INITR_BLACKTAB);  
@@ -345,10 +347,22 @@ int main (void)
     while(1)
     { 
         scribe_byte2_astext(foo);
-
         _delay_ms(300); 
 
     }//while 1
+    */
+    
+    init_ob_led();
+    
+    init_transceiver();
+    set_txmode();
+
+    while (1)
+    {
+        blink_led();
+        //test_pins();
+        //UART_Transmit(0xaa);
+    }
 
 }//main
 

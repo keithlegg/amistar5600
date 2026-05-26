@@ -1,21 +1,19 @@
-
-
-//   -------------- hardware connections -------------------
-// ST7735             |
-// Backlight          |  connected to +3.3 V
-// MISO               |
-// SCK                | 
-// MOSI               | 
-// TFT_CS             | 
-// CARD_CS            | 
-// Data/Command       | 
-// RESET              | 
-// VCC                | 
-// Gnd                |
-//   -------------- hardware connections -------------------
-
 #ifndef _ST7735H_
 #define _ST7735H_
+
+
+/*******************/
+//set up the software control lines for TFT LCD/SPI
+
+#define CTRL_PORT PORTE  // USE THIS PORT FOR SOFTWARE CONTROLED SPI CS LINES
+#define TFT_RST 0x04     // DONT THINK WE NEED THIS?
+#define TFT_DC 0x10      // SEEMS TO PULSE EVERY 4 OR SO BYTES - 32bit? 
+#define TFT_CS 0x20      // SPI SS/CS 
+
+
+
+/*******************/
+
 
 // some flags for ST7735_InitR()
 enum initRFlags{
