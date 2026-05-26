@@ -37,39 +37,35 @@ void init_ob_led(void)
 void init_transceiver(void)
 {
 
-    XVR_DDR_CTRL_1 = 0xff; //PDE
-    XVR_DDR_CTRL_2 = 0xff; //PDG
-    XVR_DDR_CTRL_3 = 0xff; //PFH    
-
-    XVR_CTRL_1 = 0xff; //PDE
-    XVR_CTRL_2 = 0xff; //PDG
-    XVR_CTRL_3 = 0xff; //PFH
-         
+    //  XXX &= ~(1 << DDD2);             // Clear the PD2 pin
+    //  XXX |= (1 << PD3)|(1 << PD2);    // turn on the pull-ups    
+    //set data direction registers
+    XVR_DDR_CTRL_1 |= (1 << PG5); //PDG 
+    XVR_DDR_CTRL_2 |= (1 << PE3); //PDE (shared with TFT)
+    XVR_DDR_CTRL_3 |= (1 << PH3); //PFH    
 
 }
 
-//-------------------
+//*******************************************//
 //set the control lines on the 75ALS171 transciever chip
 /*DE,CDE high, RE low */
 void set_rxmode(void)
 {
 
-    // cbi(PORTD,2); //recieve mode is active low 
-    // PORTD |=  (1<<PD3) | (1<<PD4);
-
-
+    cbi(XVR_CTRL_1,3);        //PDG
+    XVR_CTRL_3 |= (1 << PH3); //PDH
+    XVR_CTRL_2 |= (1 << PG5); //PEG
 }
+
 
 //*******************************************//
 //set the control lines on the 75ALS171 transciever chip
 /*DE,CDE,RE all high */
 void set_txmode(void)
 {
-    // RE  = PD2
-    // CDE = PD3
-    // 1DE = PD4
-
-    //PORTD |= (1<<PD2) | (1<<PD3) | (1<<PD4);
+    XVR_CTRL_1 |= (1 << PG5); //PDG
+    XVR_CTRL_2 |= (1 << PE3); //PDE (shared with TFT)
+    XVR_CTRL_3 |= (1 << PH3); //PFH
 }
 
 

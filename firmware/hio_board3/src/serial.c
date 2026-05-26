@@ -29,16 +29,19 @@ extern uint16_t buf1_16;
 
 
 
-
+ 
 /***********************************************/
 void UART_Init( unsigned int ubrr)
 {
     UBRR0H = (unsigned char)(ubrr>>8);
     UBRR0L = (unsigned char)ubrr;
     UCSR0B = (1<<RXEN0)|(1<<TXEN0);
-    
+
+
     //DOH !! RUN AT FULL SPEED 115K!!!
-    UCSR0A |= (1<<U2X0); //DAMN DAMN DAMN - HOW DID I NOT FIND THIS SOONER????
+    //UCSR0A |= (1<<U2X0); //DAMN DAMN DAMN - HOW DID I NOT FIND THIS SOONER????
+
+    // // UCSR0C = (1<<USBS0)|(3<<UCSZ00);
 
 }
 
@@ -54,7 +57,7 @@ uint8_t UART_receive(void)
 
 
 /***********************************************/
-void UART_Transmit( unsigned char data )
+void UART_transmit( unsigned char data )
 {
   while ( !( UCSR0A & (1<<UDRE0)) );
   UDR0 = data;
@@ -82,13 +85,13 @@ void print_byte( uint8_t data){
    for (i=0; i<=7; i++) {
        //if ( !!(data & (1 << ii)) ){  // LSB
        if ( !!(data & (1 << (7 - i))) ){  // MSB
-           UART_Transmit( BIT_OFF );
+           UART_transmit( BIT_OFF );
        }else{
-           UART_Transmit( BIT_ON );
+           UART_transmit( BIT_ON );
        }
     }
-    UART_Transmit( 0xa ); //CHAR_TERM = new line  
-    UART_Transmit( 0xd ); //0xd = carriage return
+    UART_transmit( 0xa ); //CHAR_TERM = new line  
+    UART_transmit( 0xd ); //0xd = carriage return
 }
 
 
@@ -102,15 +105,15 @@ void send_txt_byte( uint8_t data, uint8_t use_newline){
    for (i=0; i<=7; i++) {
        //if ( !!(data & (1 << ii)) ){  // LSB
        if ( !!(data & (1 << (7 - i))) ){  // MSB
-           UART_Transmit( BIT_OFF );
+           UART_transmit( BIT_OFF );
        }else{
-           UART_Transmit( BIT_ON );
+           UART_transmit( BIT_ON );
        }
     }
 
     if(use_newline!=0){
-        UART_Transmit( 0xa ); //CHAR_TERM = new line  
-        UART_Transmit( 0xd ); //0xd = carriage return
+        UART_transmit( 0xa ); //CHAR_TERM = new line  
+        UART_transmit( 0xd ); //0xd = carriage return
     }
 }
 
@@ -121,22 +124,22 @@ void send_txt_2bytes( uint16_t data, uint8_t use_newline,  uint8_t use_space){
    uint8_t i = 0;
 
    for (i=0; i<=15; i++) {
-       //if (i==8){  UART_Transmit(0x20); }//middle space 
+       //if (i==8){  UART_transmit(0x20); }//middle space 
 
        if ( !!(data & (1 << (15 - i))) ){  // MSB
-           UART_Transmit( BIT_OFF );
+           UART_transmit( BIT_OFF );
        }else{
-           UART_Transmit( BIT_ON );
+           UART_transmit( BIT_ON );
        }
     }
     
     if(use_space!=0){
-        UART_Transmit(0x20);    //SPACE 
+        UART_transmit(0x20);    //SPACE 
     }
 
     if(use_newline!=0){
-        UART_Transmit( 0xa ); //CHAR_TERM = new line  
-        UART_Transmit( 0xd ); //0xd = carriage return
+        UART_transmit( 0xa ); //CHAR_TERM = new line  
+        UART_transmit( 0xd ); //0xd = carriage return
     }
 }
 
@@ -147,7 +150,7 @@ void send_txt_2bytes( uint16_t data, uint8_t use_newline,  uint8_t use_space){
 void UARTWriteStr(char *data) 
 { 
    while(*data){ 
-      UART_Transmit(*data++); 
+      UART_transmit(*data++); 
    }
 }
 

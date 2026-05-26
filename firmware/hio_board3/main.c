@@ -354,14 +354,24 @@ int main (void)
     
     init_ob_led();
     
-    init_transceiver();
-    set_txmode();
+    UART_Init(MYUBRR);
 
+    init_transceiver();
+    
+    //set_txmode();
+    set_rxmode();
+
+    unsigned char inout ;
     while (1)
     {
-        blink_led();
-        //test_pins();
-        //UART_Transmit(0xaa);
+         
+        inout = UART_receive();  
+        if(inout==0xaa)
+        {
+            blink_led();    
+        }
+
+        //UART_transmit(0xaa); 
     }
 
 }//main

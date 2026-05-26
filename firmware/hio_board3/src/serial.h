@@ -10,7 +10,7 @@ void UART_Init( unsigned int ubrr);
 void USART_tx_string( char *data );
 void UARTWriteStr(char *data);
 
-void UART_Transmit( unsigned char data );
+void UART_transmit( unsigned char data );
 uint8_t UART_receive(void);
 
 void echo_uart(void);
