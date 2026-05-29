@@ -39,7 +39,7 @@ void UART_Init( unsigned int ubrr)
 
 
     //DOH !! RUN AT FULL SPEED 115K!!!
-    //UCSR0A |= (1<<U2X0); //DAMN DAMN DAMN - HOW DID I NOT FIND THIS SOONER????
+    //UCSR0A |= (1<<U2X0);  
 
     // // UCSR0C = (1<<USBS0)|(3<<UCSZ00);
 
