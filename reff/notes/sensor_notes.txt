@@ -82,7 +82,7 @@ pink   -         (-  light on between this and brown?)
 ##HEAD UP DOWN 
 
 
-each mian head pneumatic cylinder has two sensors on it, presumably UP/DOWN states  
+each main head pneumatic cylinder has two sensors on it, presumably UP/DOWN states  
 
 Sensor part number - CS9HA
 

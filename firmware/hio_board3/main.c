@@ -383,11 +383,13 @@ int main (void)
     
     while (1)
     {
-          
+        /*  
         inout = UART_receive();  
         scribe_byte_astext(inout);
         _delay_ms(100);         
+        */
 
+        test_lcd();
     }
 
 }//main
