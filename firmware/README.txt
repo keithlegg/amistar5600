@@ -20,7 +20,7 @@ new_head
 
 //----------------
 hack_hio 
-   silly test to use asembly to intewrface to unkown multiplexer chip
+   silly test to use asembly to interface to unknown multiplexer chip
 
 //----------------
 hio_pwm_generator 
