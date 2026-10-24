@@ -1880,7 +1880,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "18dc87bc-99ea-4a88-99ab-fbbc5bb17eb2")
-		(property "Reference" "HIO_CN4"
+		(property "Reference" "HIO_CN1"
 			(at 31.9968 20.32 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2006,9 +2006,9 @@
 			(uuid "e6b24479-ebb3-42e6-9729-b2457d2c7fee")
 		)
 		(instances
-			(project "hio_first_brd"
+			(project "hio_second_brd"
 				(path "/d999ca8c-b4a1-4c29-819a-63809fda4f99"
-					(reference "HIO_CN4")
+					(reference "HIO_CN1")
 					(unit 1)
 				)
 			)
@@ -2083,7 +2083,7 @@
 			(uuid "643641c7-9252-441b-b892-b380514e254e")
 		)
 		(instances
-			(project "hio_first_brd"
+			(project "hio_second_brd"
 				(path "/d999ca8c-b4a1-4c29-819a-63809fda4f99"
 					(reference "#PWR01")
 					(unit 1)
@@ -2103,7 +2103,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "4b3eb427-f3d2-45d8-9780-128dfa7f9611")
-		(property "Reference" "HIO_CN6"
+		(property "Reference" "HIO_CN3"
 			(at 35.1718 110.49 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2193,9 +2193,9 @@
 			(uuid "df85303d-bc8e-4d43-9f23-a184425db635")
 		)
 		(instances
-			(project "hio_first_brd"
+			(project "hio_second_brd"
 				(path "/d999ca8c-b4a1-4c29-819a-63809fda4f99"
-					(reference "HIO_CN6")
+					(reference "HIO_CN3")
 					(unit 1)
 				)
 			)
@@ -2270,7 +2270,7 @@
 			(uuid "b0fe99f7-d487-4d42-8c94-c7a6536bde9e")
 		)
 		(instances
-			(project "hio_first_brd"
+			(project "hio_second_brd"
 				(path "/d999ca8c-b4a1-4c29-819a-63809fda4f99"
 					(reference "#PWR02")
 					(unit 1)
@@ -2347,7 +2347,7 @@
 			(uuid "2756f6ea-76f5-4ddb-bc19-a344c517b2c4")
 		)
 		(instances
-			(project "hio_first_brd"
+			(project "hio_second_brd"
 				(path "/d999ca8c-b4a1-4c29-819a-63809fda4f99"
 					(reference "#PWR03")
 					(unit 1)
@@ -2367,7 +2367,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "d101f173-6e6b-4b1b-89be-b3de5bb7d5a6")
-		(property "Reference" "HIO_CN5"
+		(property "Reference" "HIO_CN2"
 			(at 46.355 58.42 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2445,9 +2445,9 @@
 			(uuid "6d95e223-4ddd-4043-8d6f-04990f5f4f4c")
 		)
 		(instances
-			(project "hio_first_brd"
+			(project "hio_second_brd"
 				(path "/d999ca8c-b4a1-4c29-819a-63809fda4f99"
-					(reference "HIO_CN5")
+					(reference "HIO_CN2")
 					(unit 1)
 				)
 			)
