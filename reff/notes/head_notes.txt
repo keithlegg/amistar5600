@@ -24,6 +24,9 @@ GND
 CC ROTATION  - 5V PWM 
 CCW ROTATION - 5V PWM
 
+
+
+
 #############################################
 #Each head has a pneumatic cylinder: 
 KOGANEI JDADS20X25

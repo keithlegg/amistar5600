@@ -8,7 +8,7 @@
 
 ##----------------------------
 # DIF CN14
-# white stripe wires and GND 
+# white stripe wires are GND 
 # solid are controls  ( PWM CC/CCW ) 
 
 - YW--> GND (GW/YW wires joined)
