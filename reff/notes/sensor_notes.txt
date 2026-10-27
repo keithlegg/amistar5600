@@ -27,6 +27,8 @@ DIF44 is 8 pin
 ##########################################################
 OMRON EE-SPX401 - head theta rotation sensor 
 
+Be careful to hook up properly! These little bastards are expensive to replace!
+
 
 
 PINOUT 

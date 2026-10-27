@@ -1,0 +1,67 @@
+defaults for atmega2560
+
+
+##########################
+#CHANGE FUSE BITS 
+
+#DEFAULT FUSES 
+sudo avrdude -V -c usbtiny -p atmega169   
+
+
+## avrdude -p m2560 -c usbtiny -P /path/to/serial -b 115200 -F -U flash:w:/path/to/image.hex
+
+#default
+sudo avrdude -V -c usbtiny -p m2560 -U lfuse:w:0x42:m -U hfuse:w:0x99:m -U efuse:w:0xff:m 
+
+# external no divide by eight
+sudo avrdude -V -c usbtiny -p m2560  -U lfuse:w:0xff:m -U hfuse:w:0x99:m -U efuse:w:0xff:m 
+
+# external xtal with divide by 8
+sudo avrdude -V -c usbtiny -p m2560 -U lfuse:w:0x7f:m -U hfuse:w:0x99:m -U efuse:w:0xff:m 
+
+
+
+
+
+###########################
+
+#  #read the flash ram 
+#  avrdude -p attiny2313   -c usbtiny -U flash:r:flash.bin:r    ###  -P usb
+#  #write the flash back to a chip 
+#  avrdude -p attiny2313 -c usbtiny -U flash:w:flash.bin  ##-P usb
+#  #read the eeprom 
+#  #avrdude -p attiny2313   -c usbtiny  -U eeprom:r:eedump.hex:i
+#  avrdude -p attiny2313   -c usbtiny  -U eeprom:r:eedump.bin:r
+#  #write the eeprom back to a chip 
+#  avrdude -p attiny2313 -c usbtiny -U eeprom:w:eedump.bin  ##-P usb
+
+///////////////////////////////////
+
+SNIPETS
+
+
+//set baudrate
+#define baud 4800
+#define fosc 16000000UL
+#define UBBRVAL (((fosc / (baud * 16UL))) - 1) 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
