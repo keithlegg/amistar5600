@@ -1,13 +1,21 @@
 
+*See sensor notes for the optical sensor 
+
 
 ##----------------------------
-# DIF CN13
+# DIF CN13,(? I cut the cable so I assume its CN15)
+(split into two cables for some reason, I cut one off)
 
+controls theta for heads 3&4 
+interfaces to the driver board closer to the *back* of machine 
  
-
 
 ##----------------------------
 # DIF CN14
+controls theta for heads 1&2 
+interfaces to the driver board closer to the *front* of machine 
+
+
 # white stripe wires are GND 
 # solid are controls  ( PWM CC/CCW ) 
 
