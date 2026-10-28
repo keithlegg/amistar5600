@@ -2,7 +2,34 @@
 *See sensor notes for the optical sensor 
 
 
-##----------------------------
+######################################
+STEPPER DRIVER BOARD
+
+LABEL ON BOARD - SMD2[2]
+
+ 
+3 molex plugs - 2X 4pin molex with a 3pin in the middle 
+
+
+
+|       (from top, plugs facing you)         |
+|                                            |
+|    [mtr1 ctrl]            [mtr2 ctrl]      |
+|                                            |  
+|  [MOTOR1 OUT]  [GND 24V 5V]  [MOTOR2 OUT]  |
+
+
+
+ 
+
+
+
+
+
+
+
+######################################
+
 # DIF CN13,(? I cut the cable so I assume its CN15)
 (split into two cables for some reason, I cut one off)
 

@@ -1,8 +1,8 @@
 
-PROJECT=blink
+PROJECT=theta_ctrl
 
 
-SOURCES=src/blink.c
+SOURCES=src/theta_ctrl.c
 
 
 
